@@ -1,5 +1,6 @@
 import 'package:tukuntech/home/domain/entities/Status.dart';
 import 'package:tukuntech/home/domain/entities/TimeToTake.dart';
+import 'package:tukuntech/home/domain/entities/pendingMedications.dart';
 
 class PendingMedicationsDto{
   final int id;
@@ -24,6 +25,17 @@ class PendingMedicationsDto{
         .map((e) => TimeToTakeDto.fromJson(e)).toList()
     );
   }
+
+  PendingMedications toDomain(){
+    return PendingMedications(
+      id: id,
+      medicineName: medicineName,
+      dosage: dosage,
+      status: status.map((e) => e.toDomain()).toList(),
+      timeToTake: timeToTake.map((e) => e.toDomain()).toList()
+    );
+  }
+
 }
 
 class StatusDto{
