@@ -9,7 +9,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.13.0"
-      bloc:
+  bloc:
     dependency: transitive
     description:
       name: bloc
@@ -99,7 +99,7 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-     flutter_web_plugins:
+         flutter_web_plugins:
     dependency: transitive
     description: flutter
     source: sdk
@@ -192,7 +192,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
-    platform:
+        platform:
     dependency: transitive
     description:
       name: platform
