@@ -17,14 +17,17 @@ class PendingMedicationsDto{
     required this.timeToTake
   });
 
-  factory PendingMedicationsDto.fromJson(Map<String, dynamic> json){
-    return PendingMedicationsDto(
-     id: json['id'], medicineName: json['medicineName'],
-     dosage: json['dosage'], status: (json['status'] as List)
-        .map((e) => StatusDto.fromJson(e)).toList(), timeToTake: (json['timeToTake'] as List)
-        .map((e) => TimeToTakeDto.fromJson(e)).toList()
-    );
-  }
+ factory PendingMedicationsDto.fromJson(Map<String, dynamic> json) {
+  return PendingMedicationsDto(
+    id: json['id'] ?? 0,
+    medicineName: json['medicineName'] ?? '',
+    dosage: json['dosage'] ?? '',
+    status: (json['status'] as List?)?.map((e) => StatusDto.fromJson(e)).toList() ?? [],
+    timeToTake: (json['timeToTake'] as List?)?.map((e) => TimeToTakeDto.fromJson(e)).toList() ?? [],
+
+  );
+}
+
 
   PendingMedications toDomain(){
     return PendingMedications(
