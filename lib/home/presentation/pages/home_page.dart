@@ -4,7 +4,7 @@ import 'package:tukuntech/features/auth/presentation/pages/login.dart';
 import 'package:tukuntech/home/presentation/pages/emergency_num.dart';
 import 'package:tukuntech/home/presentation/pages/reminders.dart';
 import 'package:tukuntech/home/presentation/pages/vital_signs.dart';
-import 'package:tukuntech/features/profile/presentation/pages/elder_profile_page.dart'; // ElderProfilePage
+import 'package:tukuntech/features/profile/presentation/pages/profile.dart'; // ElderProfilePage
 import 'package:tukuntech/features/profile/presentation/blocs/elder_bloc.dart';
 import 'package:tukuntech/features/profile/presentation/blocs/elder_event.dart';
 import 'package:tukuntech/features/profile/data/datasources/elder_service.dart';
