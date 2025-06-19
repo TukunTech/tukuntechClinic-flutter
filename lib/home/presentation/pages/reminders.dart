@@ -1,96 +1,85 @@
 import 'package:flutter/material.dart';
+import 'package:tukuntech/core/widgets/base_screen.dart';
 
-class RemindersPage extends StatelessWidget{
-
+class RemindersPage extends StatelessWidget {
   const RemindersPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final yellow = Color(0xFFFFD700);
-    final cyan = Color(0xFF00BCD4);
+    final yellow = const Color(0xFFFFD700);
+    final cyan = const Color(0xFF00BCD4);
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 1,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back, color: Colors.black)
-        ),
-        title: Text("Reminders", style: TextStyle(color: Colors.black)),
-        centerTitle: true,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(
-              backgroundImage: AssetImage('assets/logo.png'), 
-              radius: 18,
+    return BaseScreen(
+      currentIndex: 2,
+      child: Column(
+        children: [
+          AppBar(
+            backgroundColor: Colors.white,
+            elevation: 1,
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.arrow_back, color: Colors.black),
             ),
-          )
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //TODO: Pending Medications API
-            Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: yellow,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
+            title: const Text("Reminders", style: TextStyle(color: Colors.black)),
+            centerTitle: true,
+            actions: const [
+              Padding(
+                padding: EdgeInsets.only(right: 16.0),
+                child: CircleAvatar(
+                  backgroundImage: AssetImage('assets/logo.png'),
+                  radius: 18,
+                ),
+              )
+            ],
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: ListView(
                 children: [
-                  Icon(Icons.access_time_filled, color: Colors.blue),
-                  SizedBox(width: 8),
-                  Text("Pending Medications",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: yellow,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(Icons.access_time_filled, color: Colors.blue),
+                        SizedBox(width: 8),
+                        Text("Pending Medications", style: TextStyle(fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+
+                  _buildMedicationCard("Medicine 01", "12:00", "Ready"),
+                  _buildMedicationCard("Medicine 01", "16:00", "Ready"),
+                  _buildMedicationCard("Medicine 01", "19:00", "Ready"),
+                  _buildMedicationCard("Medicine 01", "22:00", "Ready"),
+
+                  const SizedBox(height: 20),
+
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: cyan,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Text(
+                      "Medications Taken",
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+
+                  _buildMedicationCard("Medicine 03", "09:00", "Earring"),
                 ],
               ),
             ),
-            SizedBox(height: 10),
-
-            //TODO: Lista de medicamentos pendientes API
-            _buildMedicationCard("Medicine 01", "12:00", "Ready"),
-            _buildMedicationCard("Medicine 01", "16:00", "Ready"),
-            _buildMedicationCard("Medicine 01", "19:00", "Ready"),
-            _buildMedicationCard("Medicine 01", "22:00", "Ready"),
-
-            SizedBox(height: 20),
-
-            //TODO: Medications Taken API
-            Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: cyan,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                "Medications Taken",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.white),
-              ),
-            ),
-            SizedBox(height: 10),
-
-            _buildMedicationCard("Medicine 03", "09:00", "Earring"),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        selectedItemColor: Colors.teal,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.call), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.pie_chart), label: ''),
+          ),
         ],
       ),
     );
@@ -106,7 +95,7 @@ class RemindersPage extends StatelessWidget{
       child: ListTile(
         title: Text("$name  Take at $time"),
         trailing: Container(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           decoration: BoxDecoration(
             color: statusColor,
             borderRadius: BorderRadius.circular(20),
