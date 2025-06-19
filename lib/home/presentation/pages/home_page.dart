@@ -1,57 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tukuntech/features/auth/presentation/pages/login.dart';
 import 'package:tukuntech/features/emergency_numbers/presentation/pages/emergency_numbers_page.dart';
 import 'package:tukuntech/features/vital_signs/presentation/pages/vital_signs_page.dart';
-import 'package:tukuntech/home/presentation/pages/profile.dart';
+import 'package:tukuntech/features/profile/presentation/pages/profile.dart'; // ElderProfilePage
+import 'package:tukuntech/features/profile/presentation/blocs/elder_bloc.dart';
+import 'package:tukuntech/features/profile/presentation/blocs/elder_event.dart';
+import 'package:tukuntech/features/profile/data/datasources/elder_service.dart';
 import 'package:tukuntech/home/presentation/pages/reminders.dart';
+
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-
 
   @override
   Widget build(BuildContext context) {
     const turquoise = Color(0xFF00A3B2);
 
     return Scaffold(
-  body: SafeArea(
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Column(
-        children: [
-          // Parte superior: Logout y Logo
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[300],
-                    foregroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            children: [
+              // Parte superior: Logout y Logo
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey[300],
+                        foregroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginScreen()),
+                        );
+                      },
+                      child: const Text('Log out'),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
-                    );
-                  },
-                  child: const Text('Log out'),
+                    Image.asset(
+                      'assets/logo.png',
+                      height: 50,
+                    ),
+                  ],
                 ),
-                Image.asset(
-                  'assets/logo.png',
-                  height: 50,
-                ),
-              ],
-            ),
-          ),
+              ),
 
-          // 🔽 Esta parte se centra verticalmente
+          // Centro
           Expanded(
             child: Center(
               child: Column(
@@ -72,14 +75,19 @@ class HomePage extends StatelessWidget {
                     },
                   ),
                   _OptionButton(
-                    text: 'Elder Profile',
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const ProfilePage()),
-                      );
-                    },
-                  ),
+                        text: 'Elder Profile',
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => BlocProvider(
+                                create: (_) => ElderBloc(ElderService())..add(LoadElder()),
+                                child: const ElderProfilePage(),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                   _OptionButton(
                     text: 'Emergency numbers',
                     onPressed: () {
@@ -109,7 +117,6 @@ class HomePage extends StatelessWidget {
 );
   }
 }
-
 
 class _OptionButton extends StatelessWidget {
   final String text;
