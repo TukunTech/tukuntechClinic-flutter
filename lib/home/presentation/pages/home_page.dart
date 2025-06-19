@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tukuntech/features/auth/presentation/pages/login.dart';
-import 'package:tukuntech/home/presentation/pages/emergency_num.dart';
+import 'package:tukuntech/features/emergency_numbers/presentation/pages/emergency_numbers_page.dart';
 import 'package:tukuntech/home/presentation/pages/profile.dart';
 import 'package:tukuntech/home/presentation/pages/reminders.dart';
 import 'package:tukuntech/home/presentation/pages/vital_signs.dart';
@@ -85,7 +85,7 @@ class HomePage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const EmergencyNumPage()),
+                        MaterialPageRoute(builder: (context) => const EmergencyNumbersPage()),
                       );
                     },
                   ),
