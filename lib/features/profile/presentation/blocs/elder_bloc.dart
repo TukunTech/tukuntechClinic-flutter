@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'elder_event.dart';
 import 'elder_state.dart';
-import '../../data/models/elder_dto.dart';
 import '../../data/datasources/elder_service.dart';
 
 class ElderBloc extends Bloc<ElderEvent, ElderState> {
