@@ -1,4 +1,3 @@
-import 'package:tukuntech/home/domain/entities/PendingMedications.dart';
 import 'package:tukuntech/medicationsTaken/domain/entities/MedicationTaken.dart';
 
 abstract class MedicationTakenState {

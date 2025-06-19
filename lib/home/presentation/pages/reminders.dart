@@ -162,7 +162,7 @@ class _RemindersPageState extends State<RemindersPage> {
                                       );
                                 },
                                 child: _buildMedicationCard(
-                                    med.medicineName, formattedTime, "Earring"),
+                                    med.medicineName, formattedTime, "Taken"),
                               );
                             }).toList(),
                           );
