@@ -101,7 +101,7 @@ class _RemindersPageState extends State<RemindersPage> {
 
                         return GestureDetector(
                           onTap: () {
-                            if (statusText.toLowerCase() != 'earring') {
+                            if (statusText.toLowerCase() != 'pending') {
                               final medication = MedicationTaken(
                                 id: 0,
                                 medicineName: name,
