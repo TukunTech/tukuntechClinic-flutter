@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tukuntech/features/auth/presentation/pages/login.dart';
-import 'package:tukuntech/home/presentation/pages/emergency_num.dart';
+
+import 'package:tukuntech/features/emergency_numbers/presentation/pages/emergency_numbers_page.dart';
+import 'package:tukuntech/features/vital_signs/presentation/pages/vital_signs_page.dart';
 import 'package:tukuntech/home/presentation/pages/reminders.dart';
-import 'package:tukuntech/home/presentation/pages/vital_signs.dart';
-import 'package:tukuntech/features/profile/presentation/pages/profile.dart'; // ElderProfilePage
+
+import 'package:tukuntech/features/profile/presentation/pages/profile.dart'; 
 import 'package:tukuntech/features/profile/presentation/blocs/elder_bloc.dart';
 import 'package:tukuntech/features/profile/presentation/blocs/elder_event.dart';
 import 'package:tukuntech/features/profile/data/datasources/elder_service.dart';
@@ -53,27 +55,27 @@ class HomePage extends StatelessWidget {
                 ),
               ),
 
-              // Centro
-              Expanded(
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text(
-                        'Where do you want to start?',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-                      ),
-                      const SizedBox(height: 20),
-                      _OptionButton(
-                        text: 'Vital Signs Panel',
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const VitalSignsPage()),
-                          );
-                        },
-                      ),
-                      _OptionButton(
+          // Centro
+          Expanded(
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Where do you want to start?',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                  ),
+                  const SizedBox(height: 20),
+                  _OptionButton(
+                    text: 'Vital Signs Panel',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const VitalSignsPage()),
+                      );
+                    },
+                  ),
+                  _OptionButton(
                         text: 'Elder Profile',
                         onPressed: () {
                           Navigator.push(
@@ -87,33 +89,33 @@ class HomePage extends StatelessWidget {
                           );
                         },
                       ),
-                      _OptionButton(
-                        text: 'Emergency numbers',
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const EmergencyNumPage()),
-                          );
-                        },
-                      ),
-                      _OptionButton(
-                        text: 'Reminders',
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const RemindersPage()),
-                          );
-                        },
-                      ),
-                    ],
+                  _OptionButton(
+                    text: 'Emergency numbers',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const EmergencyNumbersPage()),
+                      );
+                    },
                   ),
-                ),
+                  _OptionButton(
+                    text: 'Reminders',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const RemindersPage()),
+                      );
+                    },
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
-    );
+    ),
+  ),
+);
   }
 }
 
