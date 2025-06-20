@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tukuntech/core/widgets/base_screen.dart';
 import '../../data/models/elder_dto.dart';
 import '../blocs/elder_bloc.dart';
 import '../blocs/elder_event.dart';
@@ -28,9 +28,9 @@ class _ElderProfilePageState extends State<ElderProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-      body: BlocConsumer<ElderBloc, ElderState>(
+    return BaseScreen(
+      currentIndex: 3,
+      child: BlocConsumer<ElderBloc, ElderState>(
         listener: (context, state) {
           if (state is ElderSaved) {
             setState(() => _isSaving = false);
@@ -49,102 +49,99 @@ class _ElderProfilePageState extends State<ElderProfilePage> {
             return const Center(child: CircularProgressIndicator());
           } else if (state is ElderLoaded) {
             _elder = state.elder;
-            return SafeArea(
-              child: Column(
-                children: [
-                  // Botón "return" personalizado
-                  Padding(
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF00BFCB),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 4,
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        ),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.arrow_back, color: Colors.white),
+                            SizedBox(width: 4),
+                            Text("return", style: TextStyle(color: Colors.white)),
+                          ],
+                        ),
+                      ),
+                      const Spacer(),
+                      Image.asset(
+                        'assets/logo.png',
+                        height: 30,
+                      ),
+                    ],
+                  ),
+                ),
+                const Text(
+                  "Elder Profile",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Expanded(
+                  child: SingleChildScrollView(
                     padding: const EdgeInsets.all(16),
-                    child: Row(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () => Navigator.pop(context),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF00BFCB),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            elevation: 4,
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          ),
-                          child: const Row(
-                            mainAxisSize: MainAxisSize.min,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      elevation: 4,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
                             children: [
-                              Icon(Icons.arrow_back, color: Colors.white),
-                              SizedBox(width: 4),
-                              Text("return", style: TextStyle(color: Colors.white)),
-                            ],
-                          ),
-                        ),
-                        const Spacer(),
-                        Image.asset(
-                          'assets/logo.png', // Ajusta la ruta si usas un logo
-                          height: 30,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Text(
-                    "Elder Profile",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(16),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        elevation: 4,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Form(
-                            key: _formKey,
-                            child: Column(
-                              children: [
-                                ..._buildTextFields(),
-                                const SizedBox(height: 20),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xFF00BFCB),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      padding: const EdgeInsets.symmetric(vertical: 16),
+                              ..._buildTextFields(),
+                              const SizedBox(height: 20),
+                              SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF00BFCB),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
-                                    onPressed: _isSaving
-                                        ? null
-                                        : () {
-                                            setState(() => _isSaving = true);
-                                            context.read<ElderBloc>().add(SaveElder(_elder));
-                                          },
-                                    child: _isSaving
-                                        ? const SizedBox(
-                                            width: 20,
-                                            height: 20,
-                                            child: CircularProgressIndicator(
-                                              color: Colors.white,
-                                              strokeWidth: 2,
-                                            ),
-                                          )
-                                        : const Text("Save", style: TextStyle(color: Colors.white)),
+                                    padding: const EdgeInsets.symmetric(vertical: 16),
                                   ),
+                                  onPressed: _isSaving
+                                      ? null
+                                      : () {
+                                          setState(() => _isSaving = true);
+                                          context.read<ElderBloc>().add(SaveElder(_elder));
+                                        },
+                                  child: _isSaving
+                                      ? const SizedBox(
+                                          width: 20,
+                                          height: 20,
+                                          child: CircularProgressIndicator(
+                                            color: Colors.white,
+                                            strokeWidth: 2,
+                                          ),
+                                        )
+                                      : const Text("Save", style: TextStyle(color: Colors.white)),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             );
           } else if (state is ElderSaved) {
             context.read<ElderBloc>().add(LoadElder());
@@ -169,7 +166,7 @@ class _ElderProfilePageState extends State<ElderProfilePage> {
         if (parsed != null) _elder = _elder.copyWith(age: parsed);
       }),
       _input("Nacionalidad", _elder.nationality, (v) => _elder = _elder.copyWith(nationality: v)),
-      _input("N° Póliza", "12345678", (_) {}), // campo ficticio
+      _input("N° Póliza", "12345678", (_) {}),
       _input("Seguro", _elder.insurance, (v) => _elder = _elder.copyWith(insurance: v)),
       _input("Alergias", _elder.allergy, (v) => _elder = _elder.copyWith(allergy: v)),
       _input("Grupo Sanguíneo", _elder.bloodType, (v) => _elder = _elder.copyWith(bloodType: v)),
