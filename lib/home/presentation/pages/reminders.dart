@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tukuntech/core/widgets/base_screen.dart';
+import 'package:tukuntech/core/widgets/bottom_nav_bar.dart';
 import 'package:tukuntech/features/medicationsTaken/blocs/medication_taken_bloc.dart';
 import 'package:tukuntech/features/medicationsTaken/blocs/medication_taken_event.dart';
 import 'package:tukuntech/features/medicationsTaken/blocs/medication_taken_state.dart';
@@ -39,27 +41,9 @@ class _RemindersPageState extends State<RemindersPage> {
     final yellow = Color(0xFFFFD700);
     final cyan = Color(0xFF00BCD4);
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 1,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-        ),
-        title: const Text("Reminders", style: TextStyle(color: Colors.black)),
-        centerTitle: true,
-        actions: [
-          const Padding(
-            padding: EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(
-              backgroundImage: AssetImage('assets/logo.png'),
-              radius: 18,
-            ),
-          )
-        ],
-      ),
-      body: Padding(
+    return BaseScreen(
+      currentIndex: 2, // Index de Reminders en BottomBar
+      child: Padding(
         padding: const EdgeInsets.all(16),
         child: _isLoading
             ? const Center(child: CircularProgressIndicator())
@@ -83,12 +67,10 @@ class _RemindersPageState extends State<RemindersPage> {
                       ),
                     ),
                     const SizedBox(height: 10),
-
                     ..._pendingMedications.map((med) {
                       final times = med.timeToTake.isNotEmpty
                           ? med.timeToTake
                           : [TimeToTake(hour: 0, minute: 0, second: 0, nano: 0)];
-
                       return times.map((time) {
                         final formattedTime =
                             "${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}";
@@ -98,7 +80,6 @@ class _RemindersPageState extends State<RemindersPage> {
                         final name = med.medicineName.isNotEmpty
                             ? med.medicineName
                             : "Unnamed";
-
                         return GestureDetector(
                           onTap: () {
                             if (statusText.toLowerCase() != 'pending') {
@@ -111,12 +92,10 @@ class _RemindersPageState extends State<RemindersPage> {
                                 status: med.status,
                                 timeToTake: [time],
                               );
-
                               context.read<MedicationTakenBloc>().add(
                                     AddMedicationTakenEvent(
                                         medicationTaken: medication),
                                   );
-
                               setState(() {
                                 _pendingMedications = _pendingMedications
                                     .where((m) => m.id != med.id)
@@ -129,9 +108,7 @@ class _RemindersPageState extends State<RemindersPage> {
                         );
                       }).toList();
                     }).expand((e) => e),
-
                     const SizedBox(height: 20),
-
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
@@ -145,7 +122,6 @@ class _RemindersPageState extends State<RemindersPage> {
                       ),
                     ),
                     const SizedBox(height: 10),
-
                     BlocBuilder<MedicationTakenBloc, MedicationTakenState>(
                       builder: (context, state) {
                         if (state is LoadedMedicationTakenState) {
@@ -154,7 +130,6 @@ class _RemindersPageState extends State<RemindersPage> {
                               final time = med.timeToTake.first;
                               final formattedTime =
                                   "${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}";
-
                               return GestureDetector(
                                 onTap: () {
                                   context.read<MedicationTakenBloc>().add(
@@ -174,18 +149,6 @@ class _RemindersPageState extends State<RemindersPage> {
                   ],
                 ),
               ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        selectedItemColor: Colors.teal,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.call), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.pie_chart), label: ''),
-        ],
       ),
     );
   }
