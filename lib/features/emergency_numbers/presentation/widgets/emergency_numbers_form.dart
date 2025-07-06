@@ -12,25 +12,20 @@ class EmergencyContactForm extends StatefulWidget {
 }
 
 class _EmergencyContactFormState extends State<EmergencyContactForm> {
+  final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
 
   Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) return;
+
     final name = _nameController.text.trim();
     final phone = _phoneController.text.trim();
-
-    if (name.isEmpty || phone.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Completa ambos campos')),
-      );
-      return;
-    }
 
     print('[Form] Agregando contacto: $name - $phone');
 
     final contact = EmergencyContact(id: 0, name: name, phone: phone);
 
-    // ENVÍO del evento
     context.read<EmergencyNumbersBloc>().add(AddEmergencyContact(contact));
 
     _nameController.clear();
@@ -43,23 +38,42 @@ class _EmergencyContactFormState extends State<EmergencyContactForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextField(
-          controller: _nameController,
-          decoration: const InputDecoration(labelText: 'Name'),
-        ),
-        TextField(
-          controller: _phoneController,
-          decoration: const InputDecoration(labelText: 'Phone'),
-          keyboardType: TextInputType.phone,
-        ),
-        const SizedBox(height: 10),
-        ElevatedButton(
-          onPressed: _submit,
-          child: const Text('Add Contact'),
-        ),
-      ],
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          TextFormField(
+            controller: _nameController,
+            decoration: const InputDecoration(labelText: 'Name'),
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Este campo es obligatorio';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            controller: _phoneController,
+            decoration: const InputDecoration(labelText: 'Phone'),
+            keyboardType: TextInputType.phone,
+            maxLength: 9,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Este campo es obligatorio';
+              }
+              if (!RegExp(r'^\d{9}$').hasMatch(value.trim())) {
+                return 'El número debe tener exactamente 9 dígitos';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: _submit,
+            child: const Text('Add Contact'),
+          ),
+        ],
+      ),
     );
   }
 }
