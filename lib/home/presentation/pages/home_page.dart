@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tukuntech/features/auth/presentation/pages/login.dart';
 
+import 'package:tukuntech/home/presentation/pages/reminders.dart';
 import 'package:tukuntech/features/emergency_numbers/presentation/pages/emergency_numbers_page.dart';
 import 'package:tukuntech/features/vital_signs/presentation/pages/vital_signs_page.dart';
-import 'package:tukuntech/home/presentation/pages/reminders.dart';
+import 'package:tukuntech/features/profile/presentation/pages/profile.dart'; 
+import 'package:tukuntech/features/profile/presentation/blocs/elder_bloc.dart';
+import 'package:tukuntech/features/profile/presentation/blocs/elder_event.dart';
+import 'package:tukuntech/features/profile/data/datasources/elder_service.dart';
+
+
 
 import 'package:tukuntech/features/profile/presentation/pages/profile.dart'; 
 import 'package:tukuntech/features/profile/presentation/blocs/elder_bloc.dart';
