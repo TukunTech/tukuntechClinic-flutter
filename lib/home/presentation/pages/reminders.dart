@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tukuntech/core/widgets/base_screen.dart';
-import 'package:tukuntech/core/widgets/bottom_nav_bar.dart';
 import 'package:tukuntech/features/medicationsTaken/blocs/medication_taken_bloc.dart';
 import 'package:tukuntech/features/medicationsTaken/blocs/medication_taken_event.dart';
 import 'package:tukuntech/features/medicationsTaken/blocs/medication_taken_state.dart';

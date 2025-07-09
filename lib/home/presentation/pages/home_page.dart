@@ -11,18 +11,11 @@ import 'package:tukuntech/features/profile/presentation/blocs/elder_event.dart';
 import 'package:tukuntech/features/profile/data/datasources/elder_service.dart';
 
 
-
-import 'package:tukuntech/features/profile/presentation/pages/profile.dart'; 
-import 'package:tukuntech/features/profile/presentation/blocs/elder_bloc.dart';
-import 'package:tukuntech/features/profile/presentation/blocs/elder_event.dart';
-import 'package:tukuntech/features/profile/data/datasources/elder_service.dart';
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    const turquoise = Color(0xFF00A3B2);
 
     return Scaffold(
       body: SafeArea(
